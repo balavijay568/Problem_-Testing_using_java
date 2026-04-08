@@ -1,0 +1,151 @@
+Skip to content
+Jayasri1004
+PST-Lab
+Repository navigation
+Code
+Issues
+Pull requests
+Actions
+Projects
+Security and quality
+Insights
+Files
+Go to file
+t
+week 1
+week 2
+week 3
+week 4
+week 5
+task 1
+task 2
+task 3
+task4
+task5
+task6
+task7
+task8
+task9
+week 6
+task1
+task10
+task2
+task3
+task4
+task5
+task6
+task7
+task8
+task9
+week 7
+task1
+task10
+task2
+task3
+task4
+task5
+task6
+task7
+task8
+task9
+week 8
+task1
+task10
+task2
+task3
+task4
+task5
+task6
+task7
+task8
+task9
+week 9
+task1
+task2
+task3
+task4
+task5
+task6
+task7
+task8
+PST-Lab/week 9
+/task4
+Jayasri1004
+Jayasri1004
+Create task4
+8a9eafc
+ · 
+yesterday
+
+Code
+
+Blame
+67 lines (57 loc) · 1.86 KB
+import java.util.Scanner;
+
+// The Interface - defines the contract
+interface Notification {
+    void sendNotification(String message);
+}
+
+// Implementation for Email
+class EmailNotification implements Notification {
+    @Override
+    public void sendNotification(String message) {
+        System.out.println("Sent Email notification: " + message);
+    }
+}
+
+// Implementation for SMS
+class SMSNotification implements Notification {
+    @Override
+    public void sendNotification(String message) {
+        System.out.println("Sent SMS notification: " + message);
+    }
+}
+
+// Implementation for Push Notifications
+class PushNotification implements Notification {
+    @Override
+    public void sendNotification(String message) {
+        System.out.println("Sent Push notification: " + message);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        // Read the number of notifications
+        if (!sc.hasNextInt()) return;
+        int n = sc.nextInt();
+        
+        for (int i = 0; i < n; i++) {
+            String type = sc.next();
+            String message = sc.next();
+            
+            // Interface Reference
+            Notification notification = null;
+            
+            // Selecting the implementation based on input
+            switch (type.toUpperCase()) {
+                case "E":
+                    notification = new EmailNotification();
+                    break;
+                case "S":
+                    notification = new SMSNotification();
+                    break;
+                case "P":
+                    notification = new PushNotification();
+                    break;
+            }
+            
+            // Polymorphic call
+            if (notification != null) {
+                notification.sendNotification(message);
+            }
+        }
+        sc.close();
+    }
+}
+ 
