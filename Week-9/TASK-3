@@ -1,0 +1,153 @@
+Skip to content
+Jayasri1004
+PST-Lab
+Repository navigation
+Code
+Issues
+Pull requests
+Actions
+Projects
+Security and quality
+Insights
+Files
+Go to file
+t
+week 1
+week 2
+week 3
+week 4
+week 5
+task 1
+task 2
+task 3
+task4
+task5
+task6
+task7
+task8
+task9
+week 6
+task1
+task10
+task2
+task3
+task4
+task5
+task6
+task7
+task8
+task9
+week 7
+task1
+task10
+task2
+task3
+task4
+task5
+task6
+task7
+task8
+task9
+week 8
+task1
+task10
+task2
+task3
+task4
+task5
+task6
+task7
+task8
+task9
+week 9
+task1
+task2
+task3
+task4
+task5
+task6
+task7
+task8
+PST-Lab/week 9
+/task3
+Jayasri1004
+Jayasri1004
+Create task3
+55b66e2
+ · 
+yesterday
+
+Code
+
+Blame
+70 lines (60 loc) · 2.02 KB
+import java.util.Scanner;
+
+// Base Class
+class Payment {
+    public String processPayment(double amount) {
+        return "Processed generic payment: Total Amount = " + String.format("%.2f", amount);
+    }
+}
+
+// Subclass for Credit Card
+class CreditCardPayment extends Payment {
+    @Override
+    public String processPayment(double amount) {
+        double total = amount + (amount * 0.02); // 2% fee
+        return "Processed CreditCard payment: Total Amount = " + String.format("%.2f", total);
+    }
+}
+
+// Subclass for PayPal
+class PayPalPayment extends Payment {
+    @Override
+    public String processPayment(double amount) {
+        double total = amount + 1.50; // Flat $1.50 fee
+        return "Processed PayPal payment: Total Amount = " + String.format("%.2f", total);
+    }
+}
+
+// Subclass for UPI
+class UPIPayment extends Payment {
+    @Override
+    public String processPayment(double amount) {
+        // No extra fee
+        return "Processed UPI payment: Total Amount = " + String.format("%.2f", amount);
+    }
+}
+
+public class UPI {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        if (!sc.hasNextInt()) return;
+        int n = sc.nextInt();
+        
+        for (int i = 0; i < n; i++) {
+            String type = sc.next();
+            double amount = sc.nextDouble();
+            
+            // Polymorphic Reference
+            Payment payment;
+            
+            switch (type.toUpperCase()) {
+                case "C":
+                    payment = new CreditCardPayment();
+                    break;
+                case "P":
+                    payment = new PayPalPayment();
+                    break;
+                case "U":
+                    payment = new UPIPayment();
+                    break;
+                default:
+                    payment = new Payment();
+            }
+            
+            // Polymorphic call: The JVM decides which version to run at runtime
+            System.out.println(payment.processPayment(amount));
+        }
+        sc.close();
+    }
+}
