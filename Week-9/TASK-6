@@ -1,0 +1,190 @@
+Skip to content
+Jayasri1004
+PST-Lab
+Repository navigation
+Code
+Issues
+Pull requests
+Actions
+Projects
+Security and quality
+Insights
+Files
+Go to file
+t
+week 1
+week 2
+week 3
+week 4
+week 5
+task 1
+task 2
+task 3
+task4
+task5
+task6
+task7
+task8
+task9
+week 6
+task1
+task10
+task2
+task3
+task4
+task5
+task6
+task7
+task8
+task9
+week 7
+task1
+task10
+task2
+task3
+task4
+task5
+task6
+task7
+task8
+task9
+week 8
+task1
+task10
+task2
+task3
+task4
+task5
+task6
+task7
+task8
+task9
+week 9
+task1
+task2
+task3
+task4
+task5
+task6
+task7
+task8
+PST-Lab/week 9
+/task6
+Jayasri1004
+Jayasri1004
+Create task6
+6f312a6
+ · 
+yesterday
+
+Code
+
+Blame
+106 lines (92 loc) · 3.43 KB
+import java.util.*;
+
+class Account {
+    private int accountNumber;
+    private String holderName;
+    private double balance;
+
+    public Account(int accountNumber, String holderName, double balance) {
+        this.accountNumber = accountNumber;
+        this.holderName = holderName;
+        this.balance = balance;
+    }
+
+    public int getAccountNumber() { return accountNumber; }
+    public String getHolderName() { return holderName; }
+    public double getBalance() { return balance; }
+
+    public void deposit(double amount) {
+        this.balance += amount;
+    }
+
+    public boolean withdraw(double amount) {
+        if (amount <= balance) {
+            this.balance -= amount;
+            return true;
+        }
+        return false;
+    }
+}
+
+class Bank {
+    private Map<Integer, Account> accounts = new HashMap<>();
+
+    public void addAccount(Account acc) {
+        accounts.put(acc.getAccountNumber(), acc);
+    }
+
+    public void processOperation(String command, Scanner sc) {
+        switch (command) {
+            case "DEPOSIT":
+                int depAccNum = sc.nextInt();
+                double depAmt = sc.nextDouble();
+                Account depAcc = accounts.get(depAccNum);
+                if (depAcc != null) {
+                    depAcc.deposit(depAmt);
+                    System.out.println("Deposited " + (int)depAmt + " to " + depAcc.getHolderName());
+                } else {
+                    System.out.println("Account not found");
+                }
+                break;
+
+            case "WITHDRAW":
+                int witAccNum = sc.nextInt();
+                double witAmt = sc.nextDouble();
+                Account witAcc = accounts.get(witAccNum);
+                if (witAcc != null) {
+                    if (witAcc.withdraw(witAmt)) {
+                        System.out.println("Withdrawn " + (int)witAmt + " from " + witAcc.getHolderName());
+                    } else {
+                        System.out.println("Insufficient balance");
+                    }
+                } else {
+                    System.out.println("Account not found");
+                }
+                break;
+
+            case "TRANSFER":
+                int fromNum = sc.nextInt();
+                int toNum = sc.nextInt();
+                double transAmt = sc.nextDouble();
+                Account fromAcc = accounts.get(fromNum);
+                Account toAcc = accounts.get(toNum);
+
+                if (fromAcc == null || toAcc == null) {
+                    System.out.println("Account not found");
+                } else if (fromAcc.withdraw(transAmt)) {
+                    toAcc.deposit(transAmt);
+                    System.out.println("Transferred " + (int)transAmt + " from " + fromAcc.getHolderName() + " to " + toAcc.getHolderName());
+                } else {
+                    System.out.println("Insufficient balance");
+                }
+                break;
+        }
+    }
+}
+
+public class ACT {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Bank bank = new Bank();
+
+        // Initialize Accounts
+        int numAccounts = sc.nextInt();
+        for (int i = 0; i < numAccounts; i++) {
+            bank.addAccount(new Account(sc.nextInt(), sc.next(), sc.nextDouble()));
+        }
+
+        // Process Operations
+        int numOps = sc.nextInt();
+        for (int i = 0; i < numOps; i++) {
+            String command = sc.next();
+            bank.processOperation(command, sc);
+        }
+        sc.close();
+    }
+}
+ 
